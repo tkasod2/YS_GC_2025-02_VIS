@@ -1,0 +1,81 @@
+/* ===== 전역 높이: 뷰포트 꽉 채우기 ===== */
+html, body, #root { height: 100%; }
+body, #root {
+  min-height: 100vh;
+  min-height: 100dvh; /* 지원 브라우저에서 동적 UI 보정 */
+  margin: 0;
+  background: #0b0f1a;
+  color: #e2e8f0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+/* ===== 앱 그리드: 좌(필터)-중(지도)-우(차트) ===== */
+.app {
+  height: 100vh;
+  height: 100dvh;                /* 지원 시 우선 적용 */
+  display: grid;
+  grid-template-columns: 300px 1.6fr 0.9fr; /* 가운데(지도) 넓게 */
+  grid-template-rows: max-content 1fr;      /* 헤더는 내용 높이, 아래는 남은 공간 전부 */
+  gap: 12px;
+  padding: 12px;
+  background: #0b0f1a;
+  color: #e2e8f0;
+}
+
+/* ===== 공통 패널/카드 ===== */
+.header {
+  background: #0f172a;
+  border: 1px solid #1f2430;
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* grid 자식이 내부 컨텐츠 폭 때문에 줄어들지 못하는 문제 방지 */
+.panel, .card { min-width: 0; }
+
+.panel {
+  background: #0f172a;
+  border: 1px solid #1f2430;
+  border-radius: 14px;
+  padding: 0;
+  min-height: 0;  /* overflow로 그리드 높이 찌그러짐 방지 */
+}
+
+.card {
+  background: #0b0f1a;
+  border: 1px solid #1f2430;
+  border-radius: 12px;
+  padding: 12px;
+  min-height: 0;
+  /* 필터가 길어져도 전체 레이아웃을 밀지 않도록 자체 스크롤 */
+  max-height: calc(100dvh - 120px);
+  overflow: auto;
+}
+
+/* ===== 폼 요소 ===== */
+.field { margin-bottom: 16px; }
+.field .dual { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.scale { display: flex; justify-content: space-between; font-size: 12px; opacity: .8; margin-top: 4px; }
+
+/* ===== 지도 전용 규칙 ===== */
+.panel.map { 
+  min-height: 560px; /* 노트북에서도 작지 않게 보장 */
+  height: 100%; 
+}
+.panel.map .leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== 반응형 (모바일/좁은 화면) ===== */
+@media (max-width: 900px) {
+  .app { 
+    grid-template-columns: 1fr; 
+    grid-template-rows: max-content auto auto 1fr; 
+  }
+}
