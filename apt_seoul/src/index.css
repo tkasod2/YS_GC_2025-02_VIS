@@ -1,68 +1,186 @@
+/* ================= 제목 폰트 등록 ================= */
+@font-face {
+  font-family: "DaeguJunggu";
+  src: url("/fonts/DaeguJunggu-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.title-text {
+  font-family: "DaeguJunggu" !important;
+  font-size: 36px;
+  font-weight: 400;
+}
+
+/* ============= 전역 기본 설정 ============= */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  color: #111827;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #f9fafb 0, #e5e7eb 45%, #d1d5db 100%);
+}
+
+/* 루트 컨테이너 */
+#root {
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* 링크 기본 스타일 */
+a {
+  font-weight: 500;
+  color: #2563eb;
+  text-decoration: none;
 }
 
+a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* 버튼 기본 스타일 (필터/요약에서 재사용 가능) */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+  padding: 0.5em 1.1em;
+  font-size: 0.95rem;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #f3f4f6;
+  color: #111827;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+button:hover {
+  background-color: #e5e7eb;
+  border-color: #cbd5f5;
+  box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.4);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+/* ============= 앱 레이아웃 공용 ============= */
+
+/* app 컴포넌트 전체 레이아웃 (App.jsx에서 className="app" 쓰고 있지) */
+.app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr) 340px; /* 좌/중/우 */
+  grid-template-rows: auto minmax(0, 1fr);          /* 헤더 / 본문 */
+  gap: 16px;
+}
+
+/* 헤더 카드 */
+.header {
+  grid-column: 1 / 4;
+  grid-row: 1;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+/* 공용 카드 (필터, 요약 박스 등) */
+.card {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+/* 스크롤 생길 때를 대비한 스크롤바 커스터마이즈 */
+.card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 999px;
+}
+
+/* 제목들 조금 보기 좋게 */
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* 작은 설명 텍스트 */
+small,
+.muted {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+/* 반응형 - 화면 좁을 때 한 컬럼으로 쌓기 */
+@media (max-width: 1024px) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+
+  .header {
+    grid-column: 1;
   }
 }
+
+/* ===== 프로필 영역 스타일 ===== */
+
+.profile-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* 가로 중앙 정렬 */
+  text-align: center;    /* 텍스트 중앙 정렬 */
+  margin-bottom: 16px;
+}
+
+.profile-avatar {
+  /* 너가 사진 크롭용으로 이미 써 둔 스타일 있으면 그대로 두고,
+     없으면 아래 정도만 있어도 됨 */
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 12px auto 8px;
+}
+
+.profile-name {
+  font-size: 18px;       
+  font-weight: 700;      
+  margin-bottom: 4px;
+}
+
+.profile-sub {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+
