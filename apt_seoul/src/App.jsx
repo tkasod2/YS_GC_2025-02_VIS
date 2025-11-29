@@ -73,7 +73,6 @@ function getEffectiveBudget(price, budget, activeLoan, selectedLoan, customLoanC
   return getBuyingPower(price, budget, selectedLoan, activeLoan, customLoanCapacity);
 }
 
-
 export default function App() {
   const { rows, loading, err } = useCSV("/chunk_9_F.csv", mapRow);
 
@@ -195,7 +194,7 @@ export default function App() {
           return { ...d, loanOnly };
         })
         .filter(Boolean),
-    [filteredBase, budget, activeLoan, selectedLoan, customLoanCapacity]
+    [filteredBase, budget, activeLoan, selectedLoan, customLoanCapacity, loanYears, loanRate, loanExposure]
   );
 
   if (err) {

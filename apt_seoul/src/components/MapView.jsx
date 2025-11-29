@@ -132,7 +132,7 @@ function getBubbleColor(price, budget, loanConfig, customLoanCapacity, selectedL
 
   if (diff >= 3) return "#22c55e"; // 충분 여유
   if (diff >= 1) return "#fb923c"; // 안전
-  if (diff >= 0) return "#facc15"; // 아슬아슬
+  if (diff >= 0) return "#ec5353"; // 아슬아슬
   return null; // 못 삼
 }
 

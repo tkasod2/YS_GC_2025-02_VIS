@@ -309,6 +309,39 @@ export default function FilterPanel({
                 color: "#e5e7eb",
               }}
             >
+          {/* 상환기간 슬라이더 */}
+              <div style={{ width: "100%" }}>
+                <label
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: "#f9fafb",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: 4,
+                  }}
+                >
+                  <span>상환기간</span>
+                  <span>{loanYears}년</span>
+                </label>
+                <input
+                  type="range"
+                  min={1}
+                  max={30}
+                  value={loanYears}
+                  onChange={(e) => setLoanYears(Number(e.target.value))}
+                  style={{
+                    width: "100%",
+                    appearance: "none",
+                    height: 6,
+                    background: "#475569",
+                    borderRadius: 999,
+                    cursor: "pointer",
+                  }}
+                />
+              </div>
+    
+
               {/* 금리 + 기존대출 한 줄 */}
               <div style={{
                 marginTop: 10,
