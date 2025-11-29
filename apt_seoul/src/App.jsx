@@ -75,7 +75,7 @@ function getEffectiveBudget(price, budget, activeLoan, selectedLoan, customLoanC
 
 export default function App() {
   // const { rows, loading, err } = useCSV("/chunk_9_F.csv", mapRow);
-  const { rows, loading, err } = useCSV("/df_cost_251124_F.csv", mapRow);
+  const { rows, loading, err } = useCSV("/df_cost_251130_F.csv", mapRow);//251130 추가(금리,정책 반영)
 
   // 필터 상태
   const [budget, setBudget] = useState(4.0); // 보유 현금 (억)
