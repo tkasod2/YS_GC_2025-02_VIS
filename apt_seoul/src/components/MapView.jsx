@@ -130,7 +130,7 @@ function getBubbleColor(price, budget, loanConfig, customLoanCapacity, selectedL
   );
   const diff = eff - price;
 
-  if (diff >= 3) return "#22c55e"; // 충분 여유
+  if (diff >= 2) return "#22c55e"; // 충분 여유
   if (diff >= 1) return "#fb923c"; // 안전
   if (diff >= 0) return "#ec5353"; // 아슬아슬
   return null; // 못 삼
@@ -140,7 +140,7 @@ function getAffordabilityMessage(price, budget, loanConfig, selectedLoan, custom
   const eff = getBuyingPower(price, budget, selectedLoan, loanConfig, customLoanCapacity);
   const diff = eff - price;
 
-  if (diff >= 3) return "구매에 충분한 여유가 있어요! 😊";
+  if (diff >= 2) return "구매에 충분한 여유가 있어요! 😊";
   if (diff >= 1) return "구매하기에 적당해요 🙂";
   if (diff >= 0) return "조금 빠듯하지만 구매 가능해요 😬";
   return "예산을 초과했어요 ❌";
@@ -375,27 +375,25 @@ export default function MapView({
 
   const price = selected?.price || 0;
 
-  // 구매 구성 (현금/대출) 계산
+  // 구매 구성 (현금/대출) 계산 (MapView_ver8.jsx기준 378~398)
+  // ↓↓↓↓↓↓ 251203 수정 ↓↓↓↓↓↓
   let cashUsed = 0;
   let loanUsed = 0;
 
   if (selected && Number.isFinite(price)) {
+    let maxAvailableLoan=0;
+
     if (selectedLoan === "CUSTOM" && customLoanCapacity && customLoanCapacity > 0) {
-      const loanCap = customLoanCapacity;
-      cashUsed = Math.min(budget, price);
-      const needFromLoan = Math.max(price - cashUsed, 0);
-      loanUsed = Math.min(needFromLoan, loanCap);
+      maxAvailableLoan = customLoanCapacity;
     } else if (loanConfig) {
       const maxLoanByLtv = loanConfig.ltv * price;
-      const maxLoan = Math.min(loanConfig.maxLoan, maxLoanByLtv);
-      cashUsed = Math.min(budget, price);
-      const needFromLoan = Math.max(price - cashUsed, 0);
-      loanUsed = Math.min(needFromLoan, maxLoan);
-    } else {
-      cashUsed = Math.min(budget, price);
-      loanUsed = 0;
+      maxAvailableLoan = Math.min(loanConfig.maxLoan, maxLoanByLtv);
     }
+    loanUsed = Math.min(price,maxAvailableLoan);//대출은 최대한도로 계산(가격과 대출최대한도 중 min)
+    const remainPrice =Math.max(price-loanUsed,0); //실거래가에서 loanUsed 제외한 잔액
+    cashUsed = Math.min(budget,remainPrice); // 현금 사용은 잔가와 갖고있는 현금 중 min값 반영
   }
+  // ↑↑↑↑↑↑ 251203 수정 ↑↑↑↑↑↑
 
   const total = price || 1;
   const cashPct = (cashUsed / total) * 100;

@@ -1,0 +1,83 @@
+@font-face {
+  font-family: "DaeguJunggu";
+  src: url("/fonts/DaeguJunggu-Regular.ttf") format("truetype");
+}
+
+.title-text {
+  font-family: "DaeguJunggu", sans-serif !important;
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 700;
+}
+
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* ===== Filter panel layout ===== */
+
+/* 프로필 전체를 중앙 정렬 */
+.profile-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 가로 중앙 */
+  text-align: center; /* 텍스트 중앙 */
+  margin-bottom: 12px;
+}
+
+/* 이미 크롭해 놓은 사진 컨테이너가 있으면 className만 맞추면 됨 */
+.profile-avatar {
+  margin-bottom: 6px;
+}
+
+/* 이름: 볼드 + 사이즈 업 */
+.profile-name {
+  font-size: 18px;    /* 🔥 더 키우고 싶으면 20~22px */
+  font-weight: 700;   /* 🔥 볼드체 */
+  margin-bottom: 2px;
+}
+
+/* 멘트: 조금 작은 회색 */
+.profile-sub {
+  font-size: 12px;
+  color: #9ca3af;
+}
